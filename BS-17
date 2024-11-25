@@ -1,0 +1,51 @@
+//  Find the "k" Closest Elements to a Given Value in an Array  
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+void find_k_closest(int arr[], int n, int x, int k) {
+    qsort(arr, n, sizeof(int), compare); 
+
+    int low = 0, high = n - 1, closest = 0;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (arr[mid] == x) {
+            closest = mid;
+            break;
+        } else if (arr[mid] < x) {
+            closest = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    int left = closest, right = closest + 1;
+    while (k > 0 && (left >= 0 || right < n)) {
+        if (right >= n || (left >= 0 && abs(arr[left] - x) <= abs(arr[right] - x))) {
+            printf("%d ", arr[left]);
+            left--;
+        } else {
+            printf("%d ", arr[right]);
+            right++;
+        }
+        k--;
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5, 6, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 5, k = 3;
+
+    printf("The %d closest elements to %d are:\n", k, x);
+    find_k_closest(arr, n, x, k);
+
+    return 0;
+}
