@@ -1,0 +1,48 @@
+//Through 0/1 Knapsack problem, analyze the greedy and dynamic programming approach for the same dataset.  
+//Greedy Approach 
+
+#include <stdio.h>
+
+void knapsack_greedy(int val[], int wt[], int W, int n) {
+    int i, wt_so_far = 0, final_value = 0;
+    double ratio[n];
+
+    for (i = 0; i < n; i++) {
+        ratio[i] = (double)val[i] / wt[i];
+    }
+
+    for (i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (ratio[j] < ratio[j + 1]) {
+                swap(&ratio[j], &ratio[j + 1]);
+                swap(&wt[j], &wt[j + 1]);
+                swap(&val[j], &val[j + 1]);
+            }
+        }
+    }
+    for (i = 0; i < n; i++) {
+        if (wt_so_far + wt[i] <= W) {
+            wt_so_far += wt[i];
+            final_value += val[i];
+        }
+    }
+
+    printf("Maximum value that can be obtained = %d\n", final_value);
+}
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int val[] = {60, 100, 120};
+    int wt[] = {10, 20, 30};
+    int W = 50;
+    int n = sizeof(val) / sizeof(val[0]);
+
+    knapsack_greedy(val, wt, W, n);
+
+    return 0;
+}
