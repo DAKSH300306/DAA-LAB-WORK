@@ -1,0 +1,65 @@
+// Compare the Backtracking and Branch & Bound Approach by the implementation of 0/1 Knapsack problem. Also compare the performance with 
+dynamic programming approach. 
+//Dynamic Programming Approach
+
+#include <stdio.h>
+
+int knapSack(int W, int wt[], int val[], int n) {
+    int K[n + 1][W + 1];
+
+    for (int i = 0; i <= n; i++) {
+        for (int w = 0; w <= W; w++) {
+            if (i == 0 || w == 0)
+                K[i][w] = 0;
+            else if (wt[i - 1] <= w)
+                K[i][w] = max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
+            else
+                K[i][w] = K[i - 1][w];
+        }
+    }
+
+    return K[n][W];
+}
+
+int main() {
+    int val[] = {60, 100, 120};
+    int wt[] = {10, 20, 30};
+    int W = 50;
+    int n = sizeof(val) / sizeof(val[0]);
+
+    printf("Maximum value that can be obtained = %d\n", knapSack(W, wt, val, n));
+    return 0;
+}
+
+//Backtracking Approach
+
+#include <stdio.h>
+
+int max_val = 0;
+
+void knapSack(int W, int wt[], int val[], int n, int curr_wt, int curr_profit) {
+    if (curr_wt >= W) {
+        max_val = max(max_val, curr_profit);
+        return;
+    }
+
+    if (n == 0)
+        return;
+
+    if (curr_wt + wt[n - 1] <= W)
+        knapSack(W, wt, val, n - 1, curr_wt + wt[n - 1], curr_profit + val[n - 1]);
+
+    knapSack(W, wt, val, n - 1, curr_wt, curr_profit);
+}
+
+int main() {
+    int val[] = {60, 100, 120};
+    int wt[] = {10, 20, 30};
+    int W = 50;
+    int n = sizeof(val) / sizeof(val[0]);
+
+    knapSack(W, wt, val, n, 0, 0);
+    printf("Maximum value that can be obtained = %d\n", max_val);
+
+    return 0;
+}
