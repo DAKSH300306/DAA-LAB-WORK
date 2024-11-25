@@ -1,0 +1,62 @@
+//  Find Floor and Ceil of a Number in a Sorted Array (Recursive Solution)
+
+#include <stdio.h>
+
+int find_floor(int arr[], int low, int high, int key) {
+    if (low > high)
+        return -1; // No floor exists
+
+    if (arr[high] <= key)
+        return arr[high]; // If key is greater than or equal to the largest element
+
+    if (arr[low] > key)
+        return -1; // If the smallest element is larger than key, no floor
+
+    int mid = (low + high) / 2;
+
+    if (arr[mid] <= key && (mid == high || arr[mid + 1] > key))
+        return arr[mid];
+
+    if (arr[mid] > key)
+        return find_floor(arr, low, mid - 1, key);
+
+    return find_floor(arr, mid + 1, high, key);
+}
+int find_ceil(int arr[], int low, int high, int key) {
+    if (low > high)
+        return -1; // No ceil exists
+
+    if (arr[low] >= key)
+        return arr[low]; // If key is smaller than or equal to the smallest element
+
+    if (arr[high] < key)
+        return -1; // If key is greater than the largest element, no ceil
+
+    int mid = (low + high) / 2;
+
+    if (arr[mid] >= key && (mid == low || arr[mid - 1] < key))
+        return arr[mid];
+
+    if (arr[mid] < key)
+        return find_ceil(arr, mid + 1, high, key);
+
+    return find_ceil(arr, low, mid - 1, key);
+}
+
+int main() {
+    int arr[] = {1, 2, 8, 10, 10, 12, 19};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key = 5;
+    int floor = find_floor(arr, 0, n - 1, key);
+    int ceil = find_ceil(arr, 0, n - 1, key);
+    if (floor != -1)
+        printf("Floor of %d is %d\n", key, floor);
+    else
+        printf("Floor of %d doesn't exist\n", key);
+    if (ceil != -1)
+        printf("Ceil of %d is %d\n", key, ceil);
+    else
+        printf("Ceil of %d doesn't exist\n", key);
+
+    return 0;
+}
