@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int divide(int dividend, int divisor) {
+    if (divisor == 0) {
+        printf("Division by zero is not allowed.\n");
+        return -1;
+    }
+
+    int sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
+
+    long long abs_dividend = (dividend < 0) ? -(long long)dividend : dividend;
+    long long abs_divisor = (divisor < 0) ? -(long long)divisor : divisor;
+
+    long long low = 0, high = abs_dividend, result = 0;
+
+    while (low <= high) {
+        long long mid = (low + high) / 2;
+
+        if (mid * abs_divisor <= abs_dividend) {
+            result = mid; 
+            low = mid + 1; 
+        } else {
+            high = mid - 1; 
+        }
+    }
+
+    return sign * result; 
+}
+
+int main() {
+    int dividend, divisor;
+
+    printf("Enter the dividend: ");
+    scanf("%d", &dividend);
+
+    printf("Enter the divisor: ");
+    scanf("%d", &divisor);
+
+    int quotient = divide(dividend, divisor);
+
+    if (quotient != -1) {
+        printf("Quotient: %d\n", quotient);
+    }
+
+    return 0;
+}
