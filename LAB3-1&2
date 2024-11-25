@@ -1,0 +1,73 @@
+// Implement the activity selection problem to get a clear understanding of greedy approach. 
+
+#include <stdio.h>
+
+struct Activity {
+    int start, finish;
+};
+
+int compareActivity(const void *a, const void *b) {
+    Activity *a1 = (Activity *)a;
+    Activity *b1 = (Activity *)b;
+    return a1->finish - b1->finish;
+}
+
+void printMaxActivities(Activity arr[], int n) {
+    qsort(arr, n, sizeof(arr[0]), compareActivity);
+
+    printf("Selected activities: \n");
+    printf("%d ", arr[0].start);
+
+    int i = 1;
+    for (int j = 1; j < n; j++) {
+        if (arr[j].start >= arr[i - 1].finish) {
+            printf("%d ", arr[j].start);
+            i = j;
+        }
+    }
+}
+
+int main() {
+    Activity arr[] = {{10, 20}, {12, 25}, {20, 30}, {15, 25}, {5, 15}, {5, 10}};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printMaxActivities(arr, n);
+
+    return 0;
+}
+
+//Get a detailed insight of dynamic programming approach by the implementation of Matrix Chain Multiplication problem and see the impact of parenthesis 
+positioning on time requirements for matrix multiplication. 
+
+#include <stdio.h>  
+#include <limits.h>  
+int matrixChainOrder(int p[], int n) {     
+int m[n][n], s[n][n];     
+for (int i = 
+1; i < n; i++) {         
+m[i][i] = 0;  
+}   
+for (int length = 2; length < n; length++) {         
+= 1; i < n - length + 1; i++) {             
+m[i][j] = INT_MAX;             
+for (int i 
+int j = i + length - 1;             
+for (int k = i; k <= j - 1; k++) {                 
+int q = m[i][k] + m[k+1][j] + p[i-1] * p[k] * p[j];                 
+if (q < m[i][j]) {                     
+m[i][j] = q;  
+s[i][j] = k;  
+}  
+}  
+}  
+}      
+return 
+m[1][n-1];  
+}  
+int main() {     
+int arr[] = {1, 2, 3, 4, 5};     
+sizeof(arr[0]);     
+printf("Minimum number of multiplications is: %d\n", 
+matrixChainOrder(arr, n));  
+return 0;  
+} 
