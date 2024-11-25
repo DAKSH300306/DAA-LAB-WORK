@@ -1,0 +1,70 @@
+// Find the Frequency of Each Element in a Sorted Array Containing Duplicates 
+#include <stdio.h>
+
+void find_frequencies(int arr[], int n) {
+    int i = 0;
+
+    while (i < n) {
+        int count = 1; // Initialize count for the current element
+
+        while (i + 1 < n && arr[i] == arr[i + 1]) {
+            count++;
+            i++;
+        }
+
+        printf("Element %d occurs %d time(s)\n", arr[i], count);
+        i++;
+    }
+}
+
+int main() {
+    int arr[] = {1, 2, 2, 2, 3, 3, 5, 5, 5, 5, 8};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Frequencies of elements in the sorted array:\n");
+    find_frequencies(arr, n);
+
+    return 0;
+}
+
+//  Find the Square Root of a Number Using Binary Search 
+
+#include <stdio.h>
+
+int find_square_root(int number) {
+    if (number < 0) return -1; // Handle negative numbers
+
+    int low = 0, high = number, result = 0;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+
+        if (mid * mid == number) {
+            return mid; // Found exact square root
+        } else if (mid * mid < number) {
+            result = mid; // Update result to the closest lower value
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return result; 
+}
+
+int main() {
+    int number;
+
+    printf("Enter the number to find its square root: ");
+    scanf("%d", &number);
+
+    int result = find_square_root(number);
+
+    if (result == -1) {
+        printf("Square root of a negative number is not defined.\n");
+    } else {
+        printf("Square root of %d is %d\n", number, result);
+    }
+
+    return 0;
+}
