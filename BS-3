@@ -1,0 +1,59 @@
+//Find the First or Last Occurrence of a Given Number in a Sorted Array 
+
+#include <stdio.h>
+
+int firstOccurrence(int arr[], int n, int x) {
+    int low = 0, high = n - 1, result = -1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == x) {
+            result = mid;
+            high = mid - 1; // Look for occurrences on the left
+        } else if (x < arr[mid]) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return result;
+}
+
+int lastOccurrence(int arr[], int n, int x) {
+    int low = 0, high = n - 1, result = -1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == x) {
+            result = mid;
+            low = mid + 1; // Look for occurrences on the right
+        } else if (x < arr[mid]) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int arr[] = {2, 5, 5, 5, 6, 6, 8, 9, 9, 9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 5;
+
+    int first = firstOccurrence(arr, n, x);
+    int last = lastOccurrence(arr, n, x);
+
+    if (first != -1) {
+        printf("First occurrence of %d is at index %d\n", x, first);
+        printf("Last occurrence of %d is at index %d\n", x, last);
+    } else {
+        printf("%d is not present in array\n", x);
+    }
+
+    return 0;
+}
