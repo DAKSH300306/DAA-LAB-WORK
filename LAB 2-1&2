@@ -1,0 +1,100 @@
+//Find sum of all array elements using recursion.
+
+#include <stdio.h>
+
+int sum_array(int arr[], int n) {
+        if (n == 0) {
+        return 0;
+    }
+    return arr[n - 1] + sum_array(arr, n - 1);
+}
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int sum = sum_array(arr, n);
+
+    printf("Sum of array elements: %d\n", sum);
+
+    return 0;
+}
+
+//Create an array ‘a1’ with ‘n’ elements. Insert an element in ith position of ‘a1’ and also delete an element from jth position of ‘a1’.
+
+#include <stdio.h>
+
+void insertElement(int arr[], int *n, int i, int x) {
+    // Check if the position is valid
+    if (i < 0 || i > *n) {
+        printf("Invalid position\n");
+        return;
+    }
+
+    // Increase the array size
+    (*n)++;
+
+    // Shift elements to the right to make space for the new element
+    for (int j = *n - 1; j > i; j--) {
+        arr[j] = arr[j - 1];
+    }
+
+    // Insert the new element at the specified position
+    arr[i] = x;
+}
+
+void deleteElement(int arr[], int *n, int j) {
+    // Check if the position is valid
+    if (j < 0 || j >= *n) {
+        printf("Invalid position\n");
+        return;
+    }
+
+    // Shift elements to the left to fill the gap
+    for (int k = j; k < *n - 1; k++) {
+        arr[k] = arr[k + 1];
+    }
+
+    // Decrease the array size
+    (*n)--;
+}
+
+int main() {
+    int n, i, j, x;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    int a1[n];
+
+    printf("Enter the elements of the array:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &a1[i]);
+    }
+
+    printf("Enter the position to insert: ");
+    scanf("%d", &i);
+
+    printf("Enter the element to insert: ");
+    scanf("%d", &x);
+
+    insertElement(a1, &n, i, x);
+
+    printf("Array after insertion:\n");
+    for (i = 0; i < n; i++) {
+        printf("%d ", a1[i]);
+    }
+    printf("\n");
+
+    printf("Enter the position to delete: ");
+    scanf("%d", &j);
+
+    deleteElement(a1, &n, j);
+
+    printf("Array after deletion:\n");
+    for (i = 0; i < n; i++) {
+        printf("%d ", a1[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
