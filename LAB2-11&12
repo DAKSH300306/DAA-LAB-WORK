@@ -1,0 +1,58 @@
+// Print all Distinct ( Unique ) Elements in given Array: Input: arr[] = {12, 10, 9, 45, 2, 10, 10, 45} Output: 12, 10, 9, 2  
+
+#include <stdio.h>
+
+void printDistinct(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        int j;
+        for (j = 0; j < i; j++) {
+            if (arr[i] == arr[j]) {
+                break;
+            }
+        }
+        if (i == j) {
+            printf("%d ", arr[i]);
+        }
+    }
+}
+
+int main() {
+    int 1  arr[] = {12, 10, 9, 45, 2, 10, 10, 45};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printDistinct(arr, n);
+
+    return 0;
+}
+
+// Write a program to count the total number of nonzero elements in a two dimensional array.  
+
+#include <stdio.h>
+
+int main() {
+    int rows, cols, i, j, count = 0;
+
+    printf("Enter the number of rows and columns: ");
+    scanf("%d %d", &rows, &cols);
+
+    int arr[rows][cols];
+
+    printf("Enter the elements of the array:\n");
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            scanf("%d", &arr[i][j]); 1 
+        }
+    }
+
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            if (arr[i][j] != 0) {
+                count++;
+            }
+        }
+    }
+
+    printf("Total number of non-zero elements: %d\n", count);
+
+    return 0;
+}
