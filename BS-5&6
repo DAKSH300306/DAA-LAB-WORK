@@ -1,0 +1,96 @@
+//  Find the Smallest Missing Element from a Sorted Array 
+
+#include <stdio.h>
+
+int findMissingNumber(int arr[], int n) {
+    int low = 0, high = n - 1;
+
+    // If the first element is not 1, then 1 is the smallest missing number
+    if (arr[0] != 1)
+        return 1;
+
+    // Find the first element greater than its index + 1
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == mid + 1)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return low + 1;
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 6, 7, 8};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int missing = findMissingNumber(arr, n);
+    printf("The smallest missing number is %d\n", missing);
+    return 0;
+}
+
+// Find Floor and Ceil of a Number in a Sorted Array 
+
+#include <stdio.h>
+
+int findFloor(int arr[], int n, int x) {
+    int low = 0, high = n - 1, floor = -1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == x)
+            return mid;
+
+        if (arr[mid] <= x) {
+            floor = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    return floor;
+}
+
+int findCeil(int arr[], int n, int x) {
+    int low = 0, high = n - 1, ceil = -1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == x)
+            return mid;
+
+        if (arr[mid] >= x) {
+            ceil = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    return ceil;
+}
+
+int main() {
+    int arr[] = {1, 2, 8, 10, 10, 12, 19};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 5;
+
+    int floorIndex = findFloor(arr, n, x);
+    int ceilIndex = findCeil(arr, n, x);
+
+    if (floorIndex != -1)
+        printf("Floor of %d is %d\n", x, arr[floorIndex]);
+    else
+        printf("Floor of %d doesn't exist in array\n", x);
+
+    if (ceilIndex != -1)
+        printf("Ceil of %d is %d\n", x, arr[ceilIndex]);
+    else
+        printf("Ceil of %d doesn't exist in array\n", x);
+
+    return 0;
+}
