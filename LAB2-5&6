@@ -1,0 +1,99 @@
+//Find the product of two matrices using pointers.
+
+#include <stdio.h>
+
+void matrix_multiply(int *A, int *B, int *C, int r1, int c1, int c2) {
+    int i, j, k;
+
+    for (i = 0; i < r1; i++) {
+        for (j = 0; j < c2; j++) {
+            *(C + i*c2 + j) = 0;
+            for (k = 0; k < c1; k++) {
+                *(C + i*c2 + j) += *(A + i*c1 + k) * *(B + k*c2 + j);
+            }
+        }
+    }
+}
+
+int main() {
+    int r1, c1, r2, c2, i, j;
+
+    printf("Enter rows and columns of first matrix: ");
+    scanf("%d %d", &r1, &c1);
+
+    printf("Enter rows and columns of second matrix: ");
+    scanf("%d %d", &r2, &c2);
+
+    if (c1 != r2) {
+        printf("Matrix multiplication not possible\n");
+        return 0;
+    }
+
+    int A[r1][c1], B[r2][c2], C[r1][c2];
+
+    printf("Enter elements of first matrix:\n");
+    for (i = 0; i < r1; i++) {
+        for (j = 0; j < c1; j++) {
+            scanf("%d", &A[i][j]);
+        }
+    }
+
+    printf("Enter elements of second matrix:\n");
+    for (i = 0; i < r2; i++) {
+        for (j = 0; j < c2; j++) {
+            scanf("%d", &B[i][j]);
+        }
+    }
+
+    matrix_multiply(&A[0][0], &B[0][0], &C[0][0], r1, c1, c2);
+
+    printf("Product of matrices:\n");
+    for (i = 0; i < r1; i++) {
+        for (j = 0; j < c2; j++) {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
+
+//Store ‘n’ numbers (integers or real) in an array. Conduct a linear search for a given number and report success or failure in the form of a suitable message. 
+solve in c and only use stdio.h and string header file 
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, i, search_num;
+    int found = 0;
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter the elements:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Enter the number to search: ");
+    scanf("%d", &search_num);
+
+    for (i = 0; i < n; i++) {
+        if (arr[i] == search_num) {
+            found = 1;
+            break;
+        }
+    }
+
+    if (found) {
+        printf("Number found at index %d\n", i);
+    } else {
+        printf("Number not found\n");
+    }
+
+    return 0;
+}
