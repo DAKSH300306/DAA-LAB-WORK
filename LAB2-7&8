@@ -1,0 +1,72 @@
+//Write a program to reverse an array. 
+
+#include <stdio.h>
+
+void reverseArray(int arr[], int size) {
+    int start = 0, end = size - 1;
+    while (start < end) {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    reverseArray(arr, size);
+
+    printf("\nReversed array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    printf("\n");
+
+    return 0;
+}
+
+// Find the largest three distinct elements in an array: Input: arr[] = {11, 4, 3, 70, 43, 80} Output: 90, 50, 23  
+
+#include <stdio.h>
+
+void findLargestThree(int arr[], int n) {
+    if (n < 3) {
+        printf("Array size should be at least 3\n");
+        return;
+    }
+
+    int first = arr[0], second = -1, third = -1;
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > first) {
+            third = second;
+            second = first;
+            first = arr[i];
+        } else if (arr[i] > second && arr[i] != first) {
+            third = second;
+            second = arr[i];
+        } else if (arr[i] > third && arr[i] != first && arr[i] != second) {
+            third = arr[i];
+        }
+    }
+
+    printf("The three largest elements are: %d, %d, %d\n", first, second, third);
+}
+
+int main() {
+    int arr[] = {11, 4, 3, 70, 43, 80};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    findLargestThree(arr, n);
+
+    return 0;
+}
